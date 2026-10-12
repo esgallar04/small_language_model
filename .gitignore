@@ -1,0 +1,10 @@
+# Executable
+slm
+
+# Object files
+*.o
+
+# Editor and OS generated files
+*.dSYM
+.vscode/
+.DS_Store
