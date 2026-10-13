@@ -1,12 +1,10 @@
 #include <iostream>
 #include <string>
 #include <stdexcept>
+#include "LanguageModel.h"
+#include "TextGenerator.h"
 
 using namespace std;
-
-#include <iostream>
-#include <string>
-#include <stdexcept>
 
 int main(int argc, char* argv[]) {
     try {
@@ -60,6 +58,11 @@ int main(int argc, char* argv[]) {
         } catch (const exception&) {
             throw invalid_argument("slm: length must be an integer greater than or equal to k");
         }
+
+        LanguageModel model(k, filename, alpha);
+        TextGenerator generator(model);
+        string writen_text = generator.write(length);
+        cout << writen_text << endl;
 
         return 0;
 
