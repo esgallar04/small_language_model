@@ -12,10 +12,9 @@ class LanguageModel {
     private:
         int k;
         double alpha;
-        set<char> alphabet;
-        map<string,int> kgram_counts;
-        // to count how many times a given char goes after a kgram
-        map<string, map<char,int>> transitions;
+        set<char> alphabet; // the set of characters that appear in the training text
+        map<string,int> kgram_counts; // to count the number of k-grams of a given type
+        map<string, map<char,int>> transitions; // to count how many times a given char goes after a kgram
 
         void train(const string& filename);
 
@@ -31,7 +30,5 @@ class LanguageModel {
         bool has_kgram(const string& kgram) const;
 
 };
-
-
 
 #endif // LANGUAGE_MODEL_H

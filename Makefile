@@ -1,20 +1,20 @@
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -Wextra -Iinclude -Isrc
+CXXFLAGS = -std=c++17 -Wall -Wextra -Isrc
 
-SRC = src/main.cpp src/LanguageModel.cpp src/TextGenerator.cpp
+SRCS = src/main.cpp src/LanguageModel.cpp src/TextGenerator.cpp
 DEPS = src/LanguageModel.h src/TextGenerator.h
-OBJ = $(SCR: .cpp=.o)
+OBJS = src/main.o src/LanguageModel.o src/TextGenerator.o
 TARGET = slm
 
 all: $(TARGET)
 
-$(TARGET): $(OBJ)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJ)
+$(TARGET): $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS)
 
-%.o: %.cpp $(DEPS)
+src/%.o: src/%.cpp $(DEPS)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJ) $(TARGET)
+	rm -f $(OBJS) $(TARGET)
 
-.PHONY: all clean 
+.PHONY: all clean

@@ -3,12 +3,11 @@
 
 TextGenerator::TextGenerator(const LanguageModel& model)
     :model(model){
-        random_device rd;
+        random_device rd; // random initial seed
         rng = mt19937(rd());
     }
 
 string TextGenerator::choose_initial_kgram(){
-    // counts is a map but writing auto is much shorter than map<string, int>& counts
     const auto& counts = model.get_kgram_counts();
     vector<string> kgrams;
     vector<int> frequencies;
@@ -17,7 +16,7 @@ string TextGenerator::choose_initial_kgram(){
         kgrams.push_back(pair.first);
         frequencies.push_back(pair.second);
     }
-
+    // we create a random distribution with the obtained frequencies
     discrete_distribution<size_t> dist(frequencies.begin(), frequencies.end());
     size_t pos = dist(rng);
     
@@ -51,6 +50,7 @@ char TextGenerator::choose_next_char(const string& current_kgram){
                 count_ch_kgram = it->second;
             }
         }
+        // calculation of probabilities given by the formula shown in the assignment
         double prob = 0.0;
         if (alpha > 0.0){
             prob = (count_ch_kgram + alpha)/(total_amount + alpha * alphabet_size);
@@ -63,6 +63,7 @@ char TextGenerator::choose_next_char(const string& current_kgram){
         }
         probabilities.push_back(prob);
     }
+    // with the computed probabilities we create a distribution to then pick the next char according to those probabilities
     discrete_distribution<size_t> dist(probabilities.begin(),probabilities.end());
     size_t random_index = dist(rng);
 
