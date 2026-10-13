@@ -14,7 +14,7 @@ void LanguageModel::train(const string& filename){
         throw runtime_error("slm: can not open file '" + filename + "'");
     }
 
-    ostringstream fs;
+    ostringstream fs; // file to string
     fs << file.rdbuf();
     string text = fs.str();
     file.close();
